@@ -18,14 +18,18 @@ class Home : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val username = intent.getStringExtra("USER_USERNAME")
+
         val chatnow =findViewById<Button>(R.id.chatNowButton)
         val friends =findViewById<Button>(R.id.friendsButton)
         chatnow.setOnClickListener {
             val intent= Intent(this ,Waitingpage::class.java)
+            intent.putExtra("USER_USERNAME", username)
             startActivity(intent)
         }
         friends.setOnClickListener {
-            val intent= Intent(this ,friends::class.java)
+            val intent= Intent(this ,Friends::class.java)
             startActivity(intent)
         }
 

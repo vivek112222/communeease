@@ -37,7 +37,9 @@ android {
 }
 
 dependencies {
-    //noinspection BomWithoutPlatform
+    implementation("com.google.gms:google-services:4.4.2")
+    implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("com.google.firebase:firebase-firestore")
     implementation(libs.play)
     implementation(libs.firebase.database)
     implementation(platform(libs.firebase.bom))

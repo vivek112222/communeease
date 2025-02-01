@@ -9,55 +9,85 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Waitingpage : AppCompatActivity() {
-
-    private lateinit var database: DatabaseReference
+    private lateinit var db: FirebaseFirestore
+    private lateinit var username: String
     private lateinit var currentUserId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_waitingpage)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        database = FirebaseDatabase.getInstance().reference
+
+        db = FirebaseFirestore.getInstance()
+        username = intent.getStringExtra("USER_USERNAME") ?: ""
         currentUserId = generateUserId()
 
+        // Add the user to the waiting list
         addToWaitingList()
+
+        // Check for a match
         checkForMatch()
-
     }
+
     private fun generateUserId(): String {
-        return System.currentTimeMillis().toString() // Use a timestamp or unique identifier
+        return System.currentTimeMillis().toString() // Use a unique identifier for the user
     }
-    private fun addToWaitingList() {
-        val waitingListRef = database.child("waitingUsers").child(currentUserId)
-        waitingListRef.setValue(true).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Toast.makeText(this, "Added to waiting list.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Failed to add to waiting list.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    private fun checkForMatch() {
-        val waitingListRef = database.child("waitingUsers")
 
-        waitingListRef.addValueEventListener(object : ValueEventListener {
+    private fun addToWaitingList() {
+        db.collection("users")
+            .whereEqualTo("username", username)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val userId = documents.first().id
+                    // Add to waiting list with userId
+                    db.collection("waitingUsers").document(userId).set(mapOf("waiting" to true))
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(this, "Added to waiting list.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Failed to add to waiting list.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(this, "Error fetching user details", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun checkForMatch() {
+        val waitingListRef = FirebaseDatabase.getInstance().reference.child("waitingUsers")
+
+        waitingListRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val waitingUsers = snapshot.children.map { it.key!! }
 
-                // Check if there is another user to match with
                 if (waitingUsers.size > 1) {
                     val partnerId = waitingUsers.first { it != currentUserId }
-                    startChatWithPartner(partnerId)
+
+                    // Create chatroom name using both userIds
+                    val chatRoomName = createChatRoomName(currentUserId, partnerId)
+
+                    // Remove users from waiting list
+                    removeUsersFromWaitingList(currentUserId, partnerId)
+
+                    // Start chat with partner
+                    val intent = Intent(this@Waitingpage, random::class.java)
+                    intent.putExtra("USER_USERNAME", username)
+                    intent.putExtra("CHAT_ROOM_NAME", chatRoomName)
+                    startActivity(intent)
+                    finish() // Close waiting page
                 }
             }
 
@@ -66,20 +96,17 @@ class Waitingpage : AppCompatActivity() {
             }
         })
     }
-    private fun startChatWithPartner(partnerId: String) {
-        // Remove both users from the waiting list
-        database.child("waitingUsers").child(currentUserId).removeValue()
-        database.child("waitingUsers").child(partnerId).removeValue()
 
-        // Start the chat interface and pass partnerId to it
-        val intent = Intent(this, random::class.java)
-        intent.putExtra("PARTNER_ID", partnerId)
-        startActivity(intent)
-        finish() // Close the waiting page
+    private fun createChatRoomName(userId1: String, userId2: String): String {
+        return if (userId1 < userId2) {
+            "$userId1-$userId2"
+        } else {
+            "$userId2-$userId1"
+        }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        // Remove the current user from the waiting list when leaving the page
-        database.child("waitingUsers").child(currentUserId).removeValue()
+
+    private fun removeUsersFromWaitingList(userId1: String, userId2: String) {
+        FirebaseDatabase.getInstance().reference.child("waitingUsers").child(userId1).removeValue()
+        FirebaseDatabase.getInstance().reference.child("waitingUsers").child(userId2).removeValue()
     }
 }

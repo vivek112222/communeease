@@ -1,75 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="match_parent"
-    tools:context=".Home"
+    android:orientation="vertical"
+    android:padding="35dp"
     android:background="@color/blue">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-            android:layout_width="match_parent"
+
+    <!-- Top Bar with Settings and Notification Icons -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Settings Icon -->
+        <ImageView
+            android:src="@drawable/setting24"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- Notification Icon -->
+        <ImageView
+            android:src="@drawable/notifications"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <!-- App Title with tagline -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="make communication comfortable"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center"/>
+
+    <!-- Random Chat Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="random chat"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"/>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <!-- Chat Now Button -->
+        <Button
+            android:id="@+id/chatNowButton"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:padding="25dp"
-            android:orientation="horizontal">
-                <Button
-                    android:layout_marginTop="45dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="settings"
-                    android:id="@+id/settings"/>
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-                <Button
-                    android:layout_marginTop="45dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="notification"
-                    android:id="@+id/notification"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:text="chat now"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/purple"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Meet Your Friends Button -->
+        <Button
+            android:id="@+id/friendsButton"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:gravity="center">
-                <ImageView
-                    android:layout_width="167dp"
-                    android:layout_height="167dp"
-                    android:src="@drawable/logo"/>
+            android:text="meet your friends"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/purple"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
-        </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="95dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                        <Button
-                            android:id="@+id/chatNowButton"
-                            android:layout_width="270dp"
-                            android:layout_height="52dp"
-                            android:backgroundTint="#4CAF50"
-                            android:text="Chat Now"
-                            android:textColor="#FFFFFF" />
-
-                        <Button
-                            android:id=  "@+id/friendsButton"
-                            android:layout_width="273dp"
-                            android:layout_height="52dp"
-                            android:backgroundTint="#2196F3"
-                            android:text="Friends"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/chatNowButton"
-                            android:layout_marginTop="16dp"/>
-                </LinearLayout>
-
-
-
-        </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,13 +1,17 @@
 <resources>
+    <string name="register">register</string>
+    <string name="user">username</string>
     <string name="app_name">Commune Ease</string>
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="signin">Sign in</string>
     <string name="btnsignin">Log in</string>
     <string name="signup">sign up</string>
+    <string name="confirm">confirm password</string>
     <string name="app_logo">logo</string>
+    <string name="signemail">sign up with email</string>
     <string name="verify">verify</string>
-    <string name="google">sign in with google</string>
+    <string name="google">continue with google</string>
     <string name="slogan">Make Communication Ease</string>
     <string name="warning">please share your personal details </string>
 
@@ -22,6 +26,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
 
 
 </resources>

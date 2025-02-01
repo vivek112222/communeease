@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "861102992421",
+    "firebase_url": "https://commune-ease-default-rtdb.firebaseio.com",
     "project_id": "commune-ease",
     "storage_bucket": "commune-ease.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.communeease"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "861102992421-erj2usdq443jqdjl68ao0gc8o00qmu7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.communeease",
+            "certificate_hash": "8966bae437cbf38c76008e8391d24ddc67a7893a"
+          }
+        },
+        {
+          "client_id": "861102992421-v0d0p08vk44pbvg2bnavt9eolfh4gjln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAG_cuUm-PtyS-mh06JCVXTgXT7hJS2veM"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861102992421-v0d0p08vk44pbvg2bnavt9eolfh4gjln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

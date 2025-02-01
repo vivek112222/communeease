@@ -15,29 +15,34 @@
         android:theme="@style/Theme.CommuneEase"
         tools:ignore="ExtraText">
         <activity
+            android:name=".Home"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".verify"
+            android:exported="false" />
+        <activity
             android:name=".Waitingpage"
             android:exported="false" />
         <activity
-            android:name=".friends"
+            android:name=".Friends"
             android:exported="false" />
         <activity
             android:name=".random"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
-            android:name=".Home"
-            android:exported="false" />
-        <activity
-            android:name=".Signup"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="true">
+            android:name=".Signin"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Signup"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
