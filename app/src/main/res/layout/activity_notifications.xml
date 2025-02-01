@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="26dp"
+    android:background="@color/blue"
+    tools:context=".notifications">
+
+    <RelativeLayout
+        android:paddingTop="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Settings Icon -->
+        <ImageView
+            android:src="@drawable/setting24"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- Notification Icon -->
+        <ImageView
+            android:src="@drawable/home"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notifications"
+        android:textSize="45sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:padding="25dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFriendsList"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
