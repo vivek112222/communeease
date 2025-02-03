@@ -11,7 +11,7 @@
         android:id="@+id/messageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message text"
+        android:text="@string/message"
         android:layout_marginTop="4dp"
         android:textSize="16sp"/>
 
@@ -20,7 +20,7 @@
         android:id="@+id/timestamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Time"
+        android:text="@string/time"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
         android:textColor="#808080" />

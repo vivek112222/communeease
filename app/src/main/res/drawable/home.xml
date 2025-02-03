@@ -5,12 +5,10 @@
     android:viewportWidth="24"
     android:tint="#000000">
 
-    <!-- Circular Gray Background -->
     <path
-        android:fillColor="#D3D3D3"  <!-- Light Gray Background -->
+        android:fillColor="#D3D3D3"
     android:pathData="M12,0 A12,12 0 1,1 12,24 A12,12 0 1,1 12,0 Z"/>
 
-    <!-- Your Icon -->
     <path
         android:fillColor="@android:color/white"
         android:pathData="M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z"/>

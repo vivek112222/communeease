@@ -1,4 +1,4 @@
-package com.example.communeease
+                                package com.example.communeease
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

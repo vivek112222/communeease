@@ -55,7 +55,6 @@
             android:textSize="16sp"
             android:padding="12dp"
             android:background="@color/light_gray"
-            belo
             android:layout_marginBottom="10dp" />
 
         <TextView

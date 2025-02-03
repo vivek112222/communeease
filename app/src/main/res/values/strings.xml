@@ -16,7 +16,9 @@
     <string name="notifications">notifications</string>
     <string name="google">continue with google</string>
     <string name="slogan">Make Communication Ease</string>
-    <string name="warning">please don't share your personal details </string>
+    <string name="message">message text</string>
+    <string name="time">time</string>
+    <string name="warning">please don&apos;t share your personal details </string>
 
     <style name="LogoStyle">
         <item name="android:layout_marginBottom">16dp</item>
