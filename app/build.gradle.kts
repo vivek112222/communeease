@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.communeease"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.communeease"
-        minSdk = 34
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.gms:google-services:4.4.2")
+    implementation("com.squareup.picasso:picasso:2.71828")
     implementation("at.favre.lib:bcrypt:0.9.0")
     implementation("com.google.firebase:firebase-firestore")
     implementation(libs.play)

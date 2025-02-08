@@ -15,10 +15,25 @@
         android:theme="@style/Theme.CommuneEase"
         tools:ignore="ExtraText">
         <activity
+            android:name=".preference"
+            android:exported="false" />
+        <activity
+            android:name=".Endpage"
+            android:exported="false" />
+        <activity
+            android:name=".Changeprofile"
+            android:exported="false" />
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".privacy"
+            android:exported="false" />
+        <activity
             android:name=".notifications"
             android:exported="false" />
         <activity
-            android:name=".setting"
+            android:name=".Setting"
             android:exported="false" />
         <activity
             android:name=".Home"
@@ -38,6 +53,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Signin"
+            android:exported="false"/>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,12 +63,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Signup"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

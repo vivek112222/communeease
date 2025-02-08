@@ -5,11 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".verify">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="35dp">
+    tools:context=".verify"
+    android:padding="35dp">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -74,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
-                android:text="@string/verify"
+                android:text="@string/register"
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.542"
@@ -82,5 +80,4 @@
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
 </RelativeLayout>

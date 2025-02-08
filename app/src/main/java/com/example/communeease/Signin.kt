@@ -3,20 +3,15 @@ package com.example.communeease
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -34,14 +29,7 @@ class Signin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_signin)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -52,13 +40,14 @@ class Signin : AppCompatActivity() {
         signInWithEmail = findViewById(R.id.signinwithemail)
         signInWithGoogle = findViewById(R.id.signinwithgoogle)
 
-        // Configure Google Sign-In with Web Client ID from strings.xml
+        // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // Using Firebase Web Client ID
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
         loginButton.setOnClickListener {
             val email = usernameInput.text.toString().trim()
@@ -72,29 +61,30 @@ class Signin : AppCompatActivity() {
             loginUser(email, password)
         }
 
+
         signInWithEmail.setOnClickListener {
-            startActivity(Intent(this, verify::class.java)) // Navigate to Sign Up Page
+            startActivity(Intent(this, verify::class.java))
         }
+
 
         signInWithGoogle.setOnClickListener {
             signInWithGoogle()
         }
     }
 
-    // Email-Password Login
+
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this, Home::class.java))
-                    finish()
+                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    goToHome()
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    // Google Sign-In
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -109,7 +99,7 @@ class Signin : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                Log.e("SignIn", "Google sign-in failed", e)
+                Log.e("SignIn", "Google sign-in failed: ${e.statusCode}", e)
                 Toast.makeText(this, "Google Sign-In Failed", Toast.LENGTH_SHORT).show()
             }
         }
@@ -120,15 +110,54 @@ class Signin : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d("SignIn", "Successfully signed in with Google")
-                    Toast.makeText(this, "Sign in successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, Home::class.java))
-                    finish()
+                    val user = auth.currentUser
+                    if (user != null) {
+                        saveUserToFirestore(user)
+                    }
                 } else {
                     Log.e("SignIn", "Authentication failed", task.exception)
                     Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun saveUserToFirestore(user: FirebaseUser) {
+        val userRef = db.collection("users").document(user.uid)
+
+        userRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
+                goToHome()
+            } else {
+                val newUser = hashMapOf(
+                    "uid" to user.uid,
+                    "email" to user.email,
+                    "username" to generateRandomUsername()
+                )
+
+                userRef.set(newUser)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
+                        goToHome()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firestore", "Error saving user", e)
+                        Toast.makeText(this, "Failed to save user", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+    }
+
+    private fun generateRandomUsername(): String {
+        val prefixes = listOf("User", "Guest", "Anon", "Member")
+        val randomPrefix = prefixes.random()
+        val randomNumber = (1000..9999).random()
+        return "$randomPrefix$randomNumber"
+    }
+
+    private fun goToHome() {
+        startActivity(Intent(this, Home::class.java))
+        finish()
     }
 
     companion object {

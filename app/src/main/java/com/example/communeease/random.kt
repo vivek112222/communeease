@@ -1,95 +1,73 @@
 package com.example.communeease
 
 import ChatAdapter
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DatabaseReference
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class random : AppCompatActivity() {
-    private lateinit var senderName: TextView
+    private lateinit var SenderName: TextView
     private lateinit var chatRecyclerView: RecyclerView
     private lateinit var messageInput: EditText
+    private lateinit var nextbutton: Button
     private lateinit var sendButton: Button
     private lateinit var chatAdapter: ChatAdapter
     private val chatMessages = mutableListOf<ChatMessage>()
     private lateinit var database: DatabaseReference
     private lateinit var currentUserNickname: String
     private lateinit var partnerId: String
+    private lateinit var chatRoomRef: DatabaseReference
     private lateinit var chatRoomId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_random)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        senderName = findViewById(R.id.senderName)
+        nextbutton=findViewById(R.id.next)
+
+        SenderName = findViewById(R.id.senderName)
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
         messageInput = findViewById(R.id.messageInput)
         sendButton = findViewById(R.id.sendButton)
 
-        // Initialize Variables
-        currentUserNickname = "User" // Replace with dynamic nickname if available
-        senderName.text = currentUserNickname
+        // Get user details
+        currentUserNickname = intent.getStringExtra("CURRENT_USER_NICKNAME") ?: "User"
+        partnerId = intent.getStringExtra("PARTNER_USERNAME") ?: ""
+        val chatRoomName = intent.getStringExtra("CHAT_ROOM_NAME") ?: "Unknown"
+        val partnerProfileImageIndex = intent.getStringExtra("PARTNER_PROFILE_IMAGE_INDEX") ?: "0"
 
-        // Retrieve the partnerId from intent
-        partnerId = intent.getStringExtra("PARTNER_ID") ?: ""
 
-        // Generate a unique chat room ID for the two users
-        chatRoomId = if (currentUserNickname < partnerId) {
-            "$currentUserNickname-$partnerId"
-        } else {
-            "$partnerId-$currentUserNickname"
-        }
+        Log.d("ChatDebug", "Received Intent in random.kt. ChatRoom: $chatRoomName, Partner Username: $partnerId")
 
-        // Initialize RecyclerView
+        val partnerProfileImage: ImageView = findViewById(R.id.profileImage)
+        val profileResId = getProfileImageResource(partnerProfileImageIndex)
+        partnerProfileImage.setImageResource(profileResId)
+
+
+        // Generate unique chat room ID
+        chatRoomId = chatRoomName
+
+        SenderName.text = partnerId
+
+
+        chatRoomRef = FirebaseDatabase.getInstance().getReference("chatRooms").child(chatRoomId)
+
+        chatRoomRef.child("users").child(currentUserNickname).setValue("active")
+
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
-        chatAdapter = ChatAdapter(chatMessages)
+        chatAdapter = ChatAdapter(chatMessages, currentUserNickname)
         chatRecyclerView.adapter = chatAdapter
 
-        // Firebase Database Reference for the Chat Room
-        database = FirebaseDatabase.getInstance().getReference("chatRooms").child(chatRoomId)
 
-        // Send Message
-        sendButton.setOnClickListener {
-            val messageText = messageInput.text.toString().trim()
-            if (messageText.isNotEmpty()) {
-                val timestamp = System.currentTimeMillis()
-                val chatMessage = ChatMessage(currentUserNickname, messageText, timestamp)
-
-                // Save message to Firebase
-                database.push().setValue(chatMessage).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        messageInput.text.clear()
-                        Toast.makeText(this, "Message sent", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-        database.addChildEventListener(object : ChildEventListener {
+        chatRoomRef.child("messages").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java)
                 chatMessage?.let {
@@ -98,12 +76,83 @@ class random : AppCompatActivity() {
                     chatRecyclerView.scrollToPosition(chatMessages.size - 1)
                 }
             }
-
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         })
+
+        nextbutton.setOnClickListener {
+            val intent =Intent(this,Endpage::class.java)
+            startActivity(intent)
+        }
+
+        // Send Message
+        sendButton.setOnClickListener {
+            val messageText = messageInput.text.toString().trim()
+            if (messageText.isNotEmpty()) {
+                val timestamp = System.currentTimeMillis()
+                val chatMessage = ChatMessage(currentUserNickname, messageText, timestamp)
+
+                chatRoomRef.child("messages").push().setValue(chatMessage).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        messageInput.text.clear()
+                    } else {
+                        Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
+    private fun getProfileImageResource(index: String): Int {
+        return when (index) {
+            "1" -> R.drawable.profile1
+            "2" -> R.drawable.profile2
+            "3" -> R.drawable.profile3
+            "4" -> R.drawable.profile4
+            "5" -> R.drawable.profile5
+            else -> R.drawable.profile
+        }
+    }
+
+    // ✅ Mark user as "left" instead of deleting chat immediately
+    private fun markUserLeft() {
+        chatRoomRef.child("users").child(currentUserNickname).setValue("left").addOnCompleteListener {
+            checkAndDeleteChatRoom()
+        }
+    }
+
+    // ✅ Check if both users have left before deleting chat room
+    private fun checkAndDeleteChatRoom() {
+        chatRoomRef.child("users").get().addOnSuccessListener { snapshot ->
+            var bothUsersLeft = true
+            for (user in snapshot.children) {
+                if (user.value != "left") {
+                    bothUsersLeft = false
+                    break
+                }
+            }
+            if (bothUsersLeft) {
+                chatRoomRef.removeValue().addOnCompleteListener {
+                    Toast.makeText(this, "Chat room deleted", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        markUserLeft()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        markUserLeft()
+    }
+
+    override fun onBackPressed() {
+        markUserLeft()
+        super.onBackPressed()
+    }
 }

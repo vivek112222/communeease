@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="26dp"
-    android:background="@color/blue"
+    android:background="@drawable/bluesh"
     tools:context=".notifications">
 
     <RelativeLayout
@@ -18,13 +18,15 @@
 
         <!-- Settings Icon -->
         <ImageView
-            android:src="@drawable/setting24"
+            android:id="@+id/setting"
+            android:src="@drawable/setting"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_alignParentStart="true"/>
 
         <!-- Notification Icon -->
         <ImageView
+            android:id="@+id/homes"
             android:src="@drawable/home"
             android:layout_width="65dp"
             android:layout_height="65dp"
@@ -35,8 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/notifications"
+        android:fontFamily="@font/stylish_text"
         android:textSize="45sp"
-        android:textColor="@color/white"
+        android:layout_marginBottom="10sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"/>
 

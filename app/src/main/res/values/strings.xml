@@ -7,6 +7,7 @@
     <string name="signin">Sign in</string>
     <string name="btnsignin">Log in</string>
     <string name="signup">sign up</string>
+    <string name="logout">Log Out</string>
     <string name="friends">friends list</string>
     <string name="settings">settings</string>
     <string name="confirm">confirm password</string>
@@ -18,7 +19,16 @@
     <string name="slogan">Make Communication Ease</string>
     <string name="message">message text</string>
     <string name="time">time</string>
-    <string name="warning">please don&apos;t share your personal details </string>
+    <string name="mention">please do not go back </string>
+    <string name="profile">profile</string>
+    <string name="home">Home</string>
+    <string name="chatended">CHAT ENDED</string>
+    <string name="continu">Continue to chat with others</string>
+    <string name="changeprofile">Change Profile</string>
+    <string name="nextchat">Next Chat</string>
+    <string name="default_web_client_id">861102992421-v0d0p08vk44pbvg2bnavt9eolfh4gjln.apps.googleusercontent.com</string>
+
+    <string name="warning">please do not share your personal details </string>
 
     <style name="LogoStyle">
         <item name="android:layout_marginBottom">16dp</item>

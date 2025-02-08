@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/bluesh"
+    tools:context=".Profile">
+    <RelativeLayout
+        android:layout_marginTop="45dp"
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Settings Icon -->
+        <ImageView
+            android:contentDescription="@string/settings"
+            android:id="@+id/setting"
+            android:src="@drawable/setting"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- Notification Icon -->
+        <ImageView
+            android:id="@+id/homes"
+            android:src="@drawable/home"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/home"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile"
+        android:fontFamily="@font/stylish_text"
+        android:textSize="42sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
+
+    <!-- Profile Image -->
+
+    <!-- Username -->
+    <ImageView
+        android:layout_marginTop="25dp"
+        android:id="@+id/profileImage"
+        android:layout_width="220dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
+        android:contentDescription="@string/profile"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user"
+        android:fontFamily="@font/stylish_text"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:fontFamily="@font/stylish_text"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"/>
+
+    <!-- Warning Text -->
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/warning"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
+
+    <!-- Change Button -->
+    <Button
+        android:id="@+id/changeprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/changeprofile"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:backgroundTint="@android:color/holo_blue_dark"/>
+
+</LinearLayout>
