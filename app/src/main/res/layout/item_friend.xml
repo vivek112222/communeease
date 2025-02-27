@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@drawable/friend_item_bg"
+    android:gravity="center_vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_margin="6dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Profile Image with Rounded Corners -->
+    <ImageView
+        android:id="@+id/friendsprofile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/profile"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_image"
+        android:padding="2dp"/>
+
+    <!-- Name and Status Layout -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <!-- Friend's Name -->
+        <TextView
+            android:id="@+id/friendsname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user"
+            android:textSize="18sp"
+            android:fontFamily="@font/stylish_text"
+            android:textColor="@android:color/black"/>
+
+        <!-- Online Status -->
+        <TextView
+            android:id="@+id/friendsstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:textColor="@color/green"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+    <ImageView
+        android:contentDescription="@string/more"
+        android:id="@+id/friendOptions"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/more"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"/>
+</LinearLayout>

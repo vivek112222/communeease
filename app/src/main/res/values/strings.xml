@@ -1,16 +1,25 @@
 <resources>
+    <string name="AccountSettings">Account Settings</string>
     <string name="register">register</string>
     <string name="user">username</string>
+    <string name="done">Done</string>
+    <string name="send">send</string>
     <string name="app_name">Commune Ease</string>
     <string name="email">email</string>
+    <string name="preferences">Preferences</string>
     <string name="password">password</string>
     <string name="signin">Sign in</string>
+    <string name="sayhi">SAy hi....</string>
     <string name="btnsignin">Log in</string>
     <string name="signup">sign up</string>
     <string name="logout">Log Out</string>
+
     <string name="friends">friends list</string>
+    <string name="returntohome">Return to Home</string>
     <string name="settings">settings</string>
     <string name="confirm">confirm password</string>
+    <string name="welcome">Welcome to CommuneEase</string>
+    <string name="notificationsEnabled">Notifications Enabled :</string>
     <string name="app_logo">logo</string>
     <string name="signemail">sign up with email</string>
     <string name="verify">verify</string>
@@ -19,13 +28,20 @@
     <string name="slogan">Make Communication Ease</string>
     <string name="message">message text</string>
     <string name="time">time</string>
+    <string name="add">Add</string>
+    <string name="selecttheimage">Wallpaper</string>
+    <string name="accept">Accept</string>
     <string name="mention">please do not go back </string>
     <string name="profile">profile</string>
     <string name="home">Home</string>
     <string name="chatended">CHAT ENDED</string>
+    <string name="aboutus">About us</string>
     <string name="continu">Continue to chat with others</string>
     <string name="changeprofile">Change Profile</string>
     <string name="nextchat">Next Chat</string>
+    <string name="DeleteAccount">Delete Account</string>
+    <string name="FriendNotifications">Friend Notification</string>
+    <string name="mode">Change Mode</string>
     <string name="default_web_client_id">861102992421-v0d0p08vk44pbvg2bnavt9eolfh4gjln.apps.googleusercontent.com</string>
 
     <string name="warning">please do not share your personal details </string>
@@ -35,12 +51,16 @@
         <item name="android:tint">@color/teal_200</item>
     </style>
 
+    <string name="more">More</string>
+    <string name="sendername">Sender Name</string>
     <!-- Style for the slogan text -->
     <style name="SloganStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
+    <string name="remainder">the friend will automatically removed from the friend List after 3 days</string>
 
 
 </resources>

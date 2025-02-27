@@ -7,48 +7,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="26dp"
-    android:background="@drawable/bluesh"
     tools:context=".notifications">
 
-    <RelativeLayout
-        android:paddingTop="35dp"
+    <LinearLayout
+        android:paddingTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- Settings Icon -->
-        <ImageView
-            android:id="@+id/setting"
-            android:src="@drawable/setting"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentStart="true"/>
-
-        <!-- Notification Icon -->
-        <ImageView
-            android:id="@+id/homes"
-            android:src="@drawable/home"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notifications"
-        android:fontFamily="@font/stylish_text"
-        android:textSize="45sp"
-        android:layout_marginBottom="10sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
+        <!-- Back Button -->
+
+        <!-- Settings Text -->
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/stylish_text"
+            android:text="@string/notifications"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvNotificationMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notifications are disabled"
+        android:textSize="16sp"
+        android:textColor="#FF0000"
+        android:gravity="center"
+        android:visibility="gone"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
-        android:padding="25dp">
+        android:padding="15dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFriendsList"
 

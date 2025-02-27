@@ -18,9 +18,9 @@ class ImageAdapter(private val images: List<Int>) : RecyclerView.Adapter<ImageAd
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.imageView.setImageResource(images[position])  // Load images from the list
+        holder.imageView.setImageResource(images[position])
     }
 
-    override fun getItemCount(): Int = images.size  // Return the size of the list
+    override fun getItemCount(): Int = images.size
 }
 

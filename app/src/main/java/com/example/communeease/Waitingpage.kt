@@ -15,6 +15,7 @@ class Waitingpage : AppCompatActivity() {
     private lateinit var username: String
     private var profileImageIndex: Int? = null
     private lateinit var currentUserId: String
+    private var oppUserId: String? = null // Nullable to prevent crashes
     private lateinit var waitingListRef: DatabaseReference
     private lateinit var chatRoomsRef: DatabaseReference
 
@@ -27,24 +28,20 @@ class Waitingpage : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val sharedPreferences = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE)
 
-        // Initialize Firebase Database
         database = FirebaseDatabase.getInstance()
         waitingListRef = database.reference.child("waitingUsers")
         chatRoomsRef = database.reference.child("chatRooms")
 
-        // Get username and Firebase user ID
-        username = intent.getStringExtra("USER_USERNAME") ?: ""
-        profileImageIndex = intent.getIntExtra("PROFILE_IMAGE_INDEX", 0)
+
+        username = sharedPreferences.getString("username", "Unknown User") ?: "Unknown User"
+        profileImageIndex = sharedPreferences.getInt("profileImageIndex", 0)
+        Log.d("HomeActivity", "User details loaded from SharedPreferences: username=$username, profileImageIndex=$profileImageIndex")
         currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: generateUserId()
 
-        // Reset the waiting state
         resetUserState()
-
-        // Add user to waiting list
         addToWaitingList()
-
-        // Listen for matchmaking updates
         listenForMatch()
     }
 
@@ -61,7 +58,6 @@ class Waitingpage : AppCompatActivity() {
                         room.ref.removeValue() // Remove any previous chat rooms
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
 
@@ -72,7 +68,6 @@ class Waitingpage : AppCompatActivity() {
                         room.ref.removeValue()
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
@@ -95,40 +90,47 @@ class Waitingpage : AppCompatActivity() {
     }
 
     private fun checkForMatch() {
-        waitingListRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val waitingUsers = snapshot.children.mapNotNull { it.key }
+        waitingListRef.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                val waitingUsers = mutableData.children.mapNotNull { it.key }.toMutableList()
 
                 if (waitingUsers.size > 1) {
-                    val partnerId = waitingUsers.first { it != currentUserId }
+                    val partnerId = waitingUsers.firstOrNull { it != currentUserId } ?: return Transaction.success(mutableData)
+                    oppUserId = partnerId
+
+                    // ✅ Fetch partner username & profile image from waiting list
+                    val partnerUsername = mutableData.child(partnerId).child("username").value.toString()
+                    val partnerProfileIndex = mutableData.child(partnerId).child("profile").value?.toString() ?: "0"
+
+                    mutableData.child(currentUserId).value = null
+                    mutableData.child(partnerId).value = null
 
                     val chatRoomName = createChatRoomName(currentUserId, partnerId)
 
-                    // ✅ Fetch partner's details (username & profile image index)
-                    database.reference.child("waitingUsers").child(partnerId).get()
-                        .addOnSuccessListener { partnerSnapshot ->
-                            val partnerUsername = partnerSnapshot.child("username").value.toString()
-                            val partnerProfileImageIndex = partnerSnapshot.child("profile").value.toString()
+                    // ✅ Store both users' details in chat room
+                    val chatRoomData = mapOf(
+                        "user1" to currentUserId,
+                        "username1" to username,
+                        "profileImage1" to profileImageIndex.toString(),
+                        "user2" to partnerId,
+                        "username2" to partnerUsername,
+                        "profileImage2" to partnerProfileIndex
+                    )
 
-                            Log.d("ChatDebug", "Partner ID: $partnerId, Username: $partnerUsername, Profile Index: $partnerProfileImageIndex")
+                    chatRoomsRef.child(chatRoomName).setValue(chatRoomData)
 
-                            val myProfileImageIndex = profileImageIndex.toString()  // ✅ Get current user's profile image index
-
-                            // ✅ Create chat room with profile image indices
-                            createChatRoomInDatabase(chatRoomName, currentUserId, username, myProfileImageIndex, partnerId, partnerUsername, partnerProfileImageIndex)
-
-                            removeUsersFromWaitingList(currentUserId, partnerId)
-
-                            navigateToChat(chatRoomName, partnerUsername, partnerProfileImageIndex)
-                        }
+                    return Transaction.success(mutableData)
                 }
+                return Transaction.success(mutableData)
             }
 
-            override fun onCancelled(error: DatabaseError) {}
+            override fun onComplete(error: DatabaseError?, committed: Boolean, currentData: DataSnapshot?) {
+                if (committed) {
+                    listenForMatch()  // ✅ Ensures users go to chat when matched
+                }
+            }
         })
     }
-
-
 
     private fun createChatRoomName(userId1: String, userId2: String): String {
         return if (userId1 < userId2) {
@@ -138,50 +140,28 @@ class Waitingpage : AppCompatActivity() {
         }
     }
 
-    private fun createChatRoomInDatabase(chatRoomName: String, userId1: String, userName1: String, profileImage1: String, userId2: String, userName2: String, profileImage2: String) {
-        val chatRoomRef = chatRoomsRef.child(chatRoomName)
-
-        val chatRoomData = mapOf(
-            "user1" to userId1,
-            "username1" to userName1,
-            "profileImage1" to profileImage1,  // ✅ Pass Profile Image Index
-            "user2" to userId2,
-            "username2" to userName2,
-            "profileImage2" to profileImage2   // ✅ Pass Profile Image Index
-        )
-
-        chatRoomRef.setValue(chatRoomData).addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Toast.makeText(this, "Failed to create chat room.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
-    private fun removeUsersFromWaitingList(userId1: String, userId2: String) {
-        waitingListRef.child(userId1).removeValue()
-        waitingListRef.child(userId2).removeValue()
-    }
-
     private fun listenForMatch() {
         chatRoomsRef.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatRoom = snapshot.key ?: return
                 val user1 = snapshot.child("user1").value.toString()
                 val user2 = snapshot.child("user2").value.toString()
-                val partnerUsername = if (user1 == currentUserId) {
-                    snapshot.child("username2").value.toString()
-                } else {
-                    snapshot.child("username1").value.toString()
-                }
-
-                val partnerProfileImageIndex = if (user1 == currentUserId) {
-                    snapshot.child("profileImage2").value?.toString() ?: "0"
-                } else {
-                    snapshot.child("profileImage1").value?.toString() ?: "0"
-                }
 
                 if (user1 == currentUserId || user2 == currentUserId) {
+                    oppUserId = if (user1 == currentUserId) user2 else user1
+
+                    val partnerUsername = if (user1 == currentUserId) {
+                        snapshot.child("username2").value.toString()
+                    } else {
+                        snapshot.child("username1").value.toString()
+                    }
+
+                    val partnerProfileImageIndex = if (user1 == currentUserId) {
+                        snapshot.child("profileImage2").value?.toString() ?: "0"
+                    } else {
+                        snapshot.child("profileImage1").value?.toString() ?: "0"
+                    }
+
                     navigateToChat(chatRoom, partnerUsername, partnerProfileImageIndex)
                 }
             }
@@ -193,18 +173,26 @@ class Waitingpage : AppCompatActivity() {
         })
     }
 
-
     private fun navigateToChat(chatRoomName: String, partnerUsername: String, partnerProfileImageIndex: String) {
-        Log.d("ChatDebug", "Preparing Intent. ChatRoom: $chatRoomName, Partner Username: $partnerUsername, Partner Profile Image Index: $partnerProfileImageIndex")
+        if (oppUserId == null) {
+            Log.e("ChatDebug", "Opponent user ID is null, cannot navigate.")
+            return
+        }
+
+        Log.d("ChatDebug", "Navigating to Chat. ChatRoom: $chatRoomName, Opponent: $oppUserId")
 
         val intent = Intent(this@Waitingpage, random::class.java)
         intent.putExtra("CHAT_ROOM_NAME", chatRoomName)
         intent.putExtra("PARTNER_USERNAME", partnerUsername)
-        intent.putExtra("PARTNER_PROFILE_IMAGE_INDEX", partnerProfileImageIndex) // ✅ Pass partner's profile image index
+        intent.putExtra("OPPONENT_USER_ID", oppUserId)
+        intent.putExtra("USER_USERNAME", username)
+        intent.putExtra("PROFILE_IMAGE_INDEX", profileImageIndex)
+        intent.putExtra("PARTNER_PROFILE_IMAGE_INDEX", partnerProfileImageIndex)
 
         startActivity(intent)
         finish()
     }
+
     override fun onPause() {
         super.onPause()
         removeUserFromWaitingList()
@@ -216,10 +204,6 @@ class Waitingpage : AppCompatActivity() {
     }
 
     private fun removeUserFromWaitingList() {
-        waitingListRef.child(currentUserId).removeValue().addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Toast.makeText(this, "Failed to remove from waiting list.", Toast.LENGTH_SHORT).show()
-            }
-        }
+        waitingListRef.child(currentUserId).removeValue()
     }
 }

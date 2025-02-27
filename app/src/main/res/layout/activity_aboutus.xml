@@ -1,0 +1,373 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="26dp"
+        android:background="@color/white"
+        tools:context=".Setting">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/about_commune_ease"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/stylish_text"
+                android:text="About Commune Ease"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:contentDescription="@string/app_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"/>
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/stylish_text"
+                android:text="@string/app_name"
+                android:textColor="@android:color/black"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="make communication comfortable"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:baselineAligned="false"
+            android:layout_marginTop="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- First TextView with Background -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/animatedbackground"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="6"/>
+
+
+                <TextView
+                    android:id="@+id/about_us_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="109dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Commune Ease is an anonymous chat app that offers a safe and interactive way for users to connect with strangers."
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:background="@drawable/animatedbackground"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goal"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:shadowRadius="6"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Commune Ease is an anonymous chat app designed to help users overcome communication fear and connect freely"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:gravity="center"
+            android:background="@drawable/animatedbackground1"> <!-- Full background -->
+
+            <TextView
+                android:id="@+id/about_us_features"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="✨ Key Features ✨"
+                android:textSize="29sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:shadowColor="#000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:layout_marginBottom="6dp"/>
+
+            <!-- Feature List -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:elevation="8dp"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/about_us_feature_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:lineSpacingExtra="6dp"
+                    android:text="✅ Anonymous chatting\n✅ Temporary user profiles\n✅ Friend notifications\n✅ Customizable themes\n✅ Secure, private experience"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardKeyFeatures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/keyFeaturesHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Key Features"
+                    android:textSize="28sp"
+                    android:padding="5dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start" />
+
+                <TextView
+                    android:id="@+id/keyFeaturesContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Commune Ease offers several exciting features:\n\n- **Anonymous Chat**:\n Chat with strangers without revealing personal details.\n- **Temporary Nicknames**: \n Choose a new name for each session.\n- **End-to-End Encryption**:\n Your chats are private and secure.\n- **Friend System**:\n Add friends for private conversations.\n- **Customizable Themes**:\n Personalize the app's appearance.\n- **Message Deletion**:\n Messages disappear after a set time."
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- How It Works Section -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardHowItWorks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/howItWorksHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How It Works"
+                    android:textSize="28sp"
+                    android:padding="5dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start" />
+
+                <TextView
+                    android:id="@+id/howItWorksContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Here’s how Commune Ease works...\n1. Choose a nickname\n2. Start chatting with strangers\n3. Add friends and chat privately\n4. Messages disappear after a set time"
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Community Guidelines Section -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCommunityGuidelines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/communityGuidelinesHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Community Guidelines"
+                    android:textSize="28sp"
+                    android:padding="5dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start" />
+
+                <TextView
+                    android:id="@+id/communityGuidelinesContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="To maintain a positive environment:\n\n- Be respectful to others.\n- Report any inappropriate behavior.\n- Keep it friendly and welcoming."
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Privacy & Security Section -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPrivacySecurity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/privacySecurityHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy and Security"
+                    android:textSize="28sp"
+                    android:padding="5dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start" />
+
+                <TextView
+                    android:id="@+id/privacySecurityContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="At Commune Ease, we prioritize your privacy and security.\n\n- Your conversations are encrypted end-to-end.\n- We don't collect personal data.\n- Your chats disappear after a set time."
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

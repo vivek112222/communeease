@@ -7,74 +7,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="26dp"
-    android:background="@drawable/bluesh"
+    android:padding="6dp"
+    android:background="@color/white"
     tools:context=".Friends">
 
-    <RelativeLayout
-        android:paddingTop="35dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:paddingTop="5dp"
+        android:weightSum="3">
 
         <!-- Settings Icon -->
-
-        <!-- Notification Icon -->
         <ImageView
             android:id="@+id/setting"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="-2dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:src="@drawable/setting" />
 
+        <!-- Title in the Center -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/friends"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <!-- Home Icon -->
         <ImageView
             android:id="@+id/homes"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
             android:src="@drawable/home"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/friends"
-        android:textSize="45sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:drawable/edit_text"
+        android:layout_height="48dp"
         android:drawableEnd="@drawable/search"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:hint="Search..."
         android:inputType="text"
-        android:padding="10dp"
+        android:padding="12dp"
         android:textSize="16sp" />
 
+
     <TextView
-        android:id="@+id/warn"
-        android:layout_width="wrap_content"
+        android:id="@+id/mention"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/warning"
-        android:textSize="15sp"
-        android:textColor="@color/white"
+        android:text="@string/remainder"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:background="@drawable/linesborder"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:gravity="center"
+        android:layout_gravity="center"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
-        android:padding="25dp">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFriendsList"
+        android:padding="5dp">
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFriendsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp" />
     </RelativeLayout>
 
 </LinearLayout>

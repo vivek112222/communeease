@@ -16,45 +16,49 @@ class Changeprofile : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var saveButton: Button
     private lateinit var viewPager: ViewPager2
+    private lateinit var backs:ImageView
 
-    // List of profile images
+
     private val profileImages = listOf(
-        R.drawable.profile1, R.drawable.profile2, R.drawable.profile3,
+        R.drawable.profile,R.drawable.profile1, R.drawable.profile2, R.drawable.profile3,
         R.drawable.profile4, R.drawable.profile5
     )
 
-    private var selectedProfileIndex = 0  // Index of selected profile image
+    private var selectedProfileIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_changeprofile)
 
-        // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Find Views
+        backs=findViewById(R.id.back)
         profileImageView = findViewById(R.id.profileImageView)
         usernameEditText = findViewById(R.id.usernameEditText)
         saveButton = findViewById(R.id.saveButton)
         viewPager = findViewById(R.id.viewPager)
 
-        // Load user data
+
         loadUserProfile()
 
-        // Set up ViewPager for profile image selection
+
         val adapter = ImageAdapter(profileImages)
         viewPager.adapter = adapter
 
-        // Handle profile image selection (update the profileImageView)
+
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 selectedProfileIndex = position
                 profileImageView.setImageResource(profileImages[position]) // Update the main profile image
             }
         })
+        backs.setOnClickListener {
+            val intent=Intent(this,Profile::class.java)
+            startActivity(intent)
+        }
 
-        // Save button action
+
         saveButton.setOnClickListener {
             saveProfileChanges()
             val intent = Intent(this, Profile::class.java)
@@ -99,6 +103,12 @@ class Changeprofile : AppCompatActivity() {
         db.collection("users").document(userId)
             .update(userUpdates)
             .addOnSuccessListener {
+                val sharedPref = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putString("username", newUsername)
+                    putInt("profileImageIndex", selectedProfileIndex)
+                    apply()
+                }
                 Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
                 finish() // Close activity and go back
             }

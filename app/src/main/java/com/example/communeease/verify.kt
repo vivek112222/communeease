@@ -71,7 +71,8 @@ class verify : AppCompatActivity() {
                         "email" to email,
                         "profileImage" to randomProfileImage,
                         "friends" to friends,  // Empty friends collection
-                        "description" to defaultDescription // Add default description
+                        "description" to defaultDescription, // Add default description
+                        "notificationsEnabled" to true
                     )
 
                     // Get Firestore instance and store user data

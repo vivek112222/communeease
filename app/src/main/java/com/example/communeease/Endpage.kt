@@ -22,8 +22,8 @@ class Endpage : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        hom=findViewById(R.id.settingsButton)
-        settings=findViewById(R.id.homeButton)
+        settings=findViewById(R.id.settingsButton)
+        hom=findViewById(R.id.homeButton)
         next=findViewById(R.id.nextchat)
         next.setOnClickListener {
             val intent = Intent(this, Waitingpage::class.java)
@@ -38,4 +38,6 @@ class Endpage : AppCompatActivity() {
         }
 
     }
+
+
 }

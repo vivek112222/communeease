@@ -1,5 +1,6 @@
 package com.example.communeease
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -26,7 +27,7 @@ class Profile : AppCompatActivity() {
 
     // List of drawable profile images
     private val profileImages = listOf(
-        R.drawable.profile1, R.drawable.profile2, R.drawable.profile3,
+        R.drawable.profile,R.drawable.profile1, R.drawable.profile2, R.drawable.profile3,
         R.drawable.profile4, R.drawable.profile5
     )
 
@@ -34,6 +35,7 @@ class Profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
+        loadNotificationStatus()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -69,6 +71,14 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    private fun loadNotificationStatus() {
+        val sharedPref = getSharedPreferences("ChatAppPrefs", Context.MODE_PRIVATE)
+        val isEnabled = sharedPref.getBoolean("notificationsEnabled", false) // Default is false
+
+        val notificationTextView: TextView = findViewById(R.id.notification)
+        notificationTextView.text = if (isEnabled) "Notifications: Enabled" else "Notifications: Disabled"
+    }
+
 
     private fun loadUserProfile() {
         val userId = auth.currentUser?.uid ?: return
@@ -81,8 +91,8 @@ class Profile : AppCompatActivity() {
                     val profileImageIndex = document.getLong("profileImage")?.toInt() ?: 0
 
                     // Update UI
-                    usernameTextView.text = "Username: $username"
-                    emailTextView.text = "Email: ${maskEmail(email)}"
+                    usernameTextView.text = "$username"
+                    emailTextView.text = "${maskEmail(email)}"
                     profileImageView.setImageResource(profileImages.getOrElse(profileImageIndex) { R.drawable.profile1 })
                 } else {
                     Toast.makeText(this, "User data not found!", Toast.LENGTH_SHORT).show()
@@ -101,4 +111,9 @@ class Profile : AppCompatActivity() {
         val lastPart = email.takeLast(10) // Last 10 letters
         return "$firstPart***$lastPart" // Masked email format
     }
+    private fun saveNotificationStatus(enabled: Boolean) {
+        val sharedPref = getSharedPreferences("ChatSettings", Context.MODE_PRIVATE)
+        sharedPref.edit().putBoolean("notificationsEnabled", enabled).apply()
+    }
+
 }

@@ -1,7 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.CommuneEase" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- Base Dark Theme -->
+    <style name="Theme.CommuneEase" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <!-- Custom EditText style in Dark Mode -->
+        <item name="editTextStyle">@style/EditText.Dark</item>
+    </style>
+
+    <style name="EditText.Dark" parent="Widget.Material3.TextInputEditText.FilledBox">
+        <item name="android:backgroundTint">#A9A9A9</item> <!-- Light Gray background -->
+        <item name="android:textColor">#FFFFFF</item> <!-- White text -->
     </style>
 </resources>

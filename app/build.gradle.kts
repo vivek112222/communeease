@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("at.favre.lib:bcrypt:0.9.0")
     implementation("com.google.firebase:firebase-firestore")

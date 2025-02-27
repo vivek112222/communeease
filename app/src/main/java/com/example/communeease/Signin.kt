@@ -62,10 +62,6 @@ class Signin : AppCompatActivity() {
         }
 
 
-        signInWithEmail.setOnClickListener {
-            startActivity(Intent(this, verify::class.java))
-        }
-
 
         signInWithGoogle.setOnClickListener {
             signInWithGoogle()

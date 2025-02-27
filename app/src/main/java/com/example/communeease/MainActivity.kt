@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToSignIn() {
-        startActivity(Intent(this, Signin::class.java))
+        startActivity(Intent(this, frist::class.java))
         finish()
     }
 }

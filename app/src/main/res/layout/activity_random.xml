@@ -6,25 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    android:padding="20dp"
     tools:context=".random">
 
     <!-- Top Bar -->
 
 
     <!-- Sender Profile Section -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/senderProfileContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@color/cement"
-        android:padding="10dp"
+        android:padding="5dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:contentDescription="@string/profile"
             android:id="@+id/profileImage"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/profile" />
@@ -33,9 +34,8 @@
             android:id="@+id/senderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/profileImage"
             android:layout_marginStart="10dp"
-            android:text="Sender Name"
+            android:text="@string/sendername"
             android:textSize="18sp"
             android:textStyle="bold"
             android:padding="16dp" />
@@ -44,10 +44,18 @@
             android:id="@+id/addfriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="add"/>
-    </RelativeLayout>
+            android:visibility="visible"
+            android:backgroundTint="@color/blue"
+            android:text="@string/add"/>
+        <ImageView
+            android:id="@+id/addedImageView"
+            android:contentDescription="@string/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/done"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <!-- Chat RecyclerView with white background -->
     <androidx.recyclerview.widget.RecyclerView
@@ -56,63 +64,75 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:background="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/senderProfileContainer"
         app:layout_constraintBottom_toTopOf="@id/warningSection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Warning Section (below RecyclerView) -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/warningSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/chatRecyclerView"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/chatRecyclerView"
         app:layout_constraintBottom_toTopOf="@id/messageInputContainer">
 
+
         <TextView
             android:id="@+id/warningText"
-            android:layout_width="wrap_content"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:visibility="gone"
+            android:textColor="@color/white"
             android:text="@string/warning"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Chat"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            android:backgroundTint="@color/purple"
+            android:text="@string/nextchat" />
+    </LinearLayout>
 
     <!-- Message Input Section -->
     <RelativeLayout
         android:id="@+id/messageInputContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
+            android:inputType="text"
             android:id="@+id/messageInput"
             android:layout_width="0dp"
+            android:paddingLeft="10dp"
+            android:hint="@string/sayhi"
             android:layout_height="50dp"
+            android:background="@drawable/rounded_edittext"
             android:layout_toStartOf="@id/sendButton"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@id/sendButton"
-            android:hint="Type a message" />
+            android:layout_alignParentStart="true"/>
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            android:text="Send" />
+            android:text="@string/send" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
