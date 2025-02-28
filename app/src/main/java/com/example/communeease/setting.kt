@@ -122,6 +122,7 @@ class Setting : AppCompatActivity() {
         btnDeleteAccount.setOnClickListener {
             showDeleteAccountDialog()
         }
+
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -246,6 +247,21 @@ class Setting : AppCompatActivity() {
                 }
             })
     }
+
+    private fun loadSavedProfileImage() {
+        val sharedPref = getSharedPreferences("ChatSettings", Context.MODE_PRIVATE)
+        val savedImageUri = sharedPref.getString("chat_bg", null)
+
+        if (savedImageUri != null) {
+            val wallpaperImageView: ImageView = findViewById(R.id.wallpaper)
+
+            Glide.with(this)
+                .load(savedImageUri)
+                .into(wallpaperImageView)
+        }
+    }
+
+
 
 
 }

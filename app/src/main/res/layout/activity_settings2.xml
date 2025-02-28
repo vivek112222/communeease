@@ -165,16 +165,18 @@
         android:orientation="horizontal"
         android:padding="15dp"
         android:gravity="center">
+
         <TextView
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
             android:text="@string/selecttheimage"
             android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:paddingStart="16dp" />
+            android:textSize="20sp" />
+
         <ImageView
             android:id="@+id/wallpaper"
             android:layout_width="30dp"

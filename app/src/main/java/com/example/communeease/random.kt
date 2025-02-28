@@ -9,6 +9,7 @@ import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -122,6 +123,11 @@ class random : AppCompatActivity() {
                 }
             }
         }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goToHomePage()
+            }
+        })
     }
 
     private fun getProfileImageResource(index: String): Int {
@@ -318,5 +324,10 @@ class random : AppCompatActivity() {
     override fun onBackPressed() {
         markUserLeft()
         super.onBackPressed()
+    }
+    private fun goToHomePage() {
+        val intent = Intent(this, Home::class.java)
+        startActivity(intent)
+        finish() // Ensures the user cannot go back to the random page
     }
 }

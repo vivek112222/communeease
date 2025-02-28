@@ -57,7 +57,9 @@
         android:layout_height="wrap_content"
         android:text="Get Started"
         android:padding="10dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/purple"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="30dp"
         android:textColor="@color/white"
         android:textSize="26sp"
         android:layout_marginBottom="10dp"/>
