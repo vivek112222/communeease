@@ -232,15 +232,15 @@
     </LinearLayout>
 
     <!-- Delete Account Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/blue"
+        android:background="@drawable/btn"
         android:text="@string/DeleteAccount"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_marginTop="20dp"/>

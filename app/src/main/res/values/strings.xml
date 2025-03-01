@@ -40,6 +40,7 @@
     <string name="changeprofile">Change Profile</string>
     <string name="nextchat">Next Chat</string>
     <string name="DeleteAccount">Delete Account</string>
+    <string name="underline"><u>Already have an account? Sign in</u></string>
     <string name="FriendNotifications">Friend Notification</string>
     <string name="mode">Change Mode</string>
     <string name="default_web_client_id">861102992421-v0d0p08vk44pbvg2bnavt9eolfh4gjln.apps.googleusercontent.com</string>
@@ -53,11 +54,9 @@
 
     <string name="more">More</string>
     <string name="sendername">Sender Name</string>
-    <!-- Style for the slogan text -->
     <style name="SloganStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <string name="remainder">the friend will automatically removed from the friend List after 3 days</string>

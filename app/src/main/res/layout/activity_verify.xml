@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".verify"
+    android:gravity="center"
     android:padding="35dp">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/blue"
-            android:textSize="60sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" >
 
 
             <TextView
@@ -28,16 +19,13 @@
                 android:layout_marginTop="32dp"
                 android:fontFamily="serif"
                 android:text="@string/signup"
-                android:textColor="@color/blue"
+                android:textColor="@color/black"
                 android:textSize="60sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/email"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginTop="52dp"
                 android:autofillHints="emailAddress"
@@ -45,15 +33,10 @@
                 android:hint="@string/user"
                 android:inputType="textEmailAddress"
                 android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/appname" />
-
+                android:paddingEnd="20dp"/>
             <EditText
                 android:id="@+id/password"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="53dp"
                 android:layout_marginTop="40dp"
                 android:autofillHints="password"
@@ -67,17 +50,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/email" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
+                android:background="@drawable/btn"
                 android:text="@string/register"
                 android:textSize="25sp"
+                android:textColor="@color/white"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.542"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-</RelativeLayout>
+
+</LinearLayout>

@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="95dp"
-            android:fontFamily="serif"
             android:text="@string/signin"
             android:textColor="@color/blue"
             android:textSize="60sp"
@@ -53,14 +52,17 @@
             android:background="@drawable/background"
             android:autofillHints="password" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/purple"
-            android:text="@string/btnsignin" />
+            android:layout_marginTop="32dp"
+            android:background="@drawable/btn"
+            android:text="@string/signin"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:id="@+id/signinwithemail"

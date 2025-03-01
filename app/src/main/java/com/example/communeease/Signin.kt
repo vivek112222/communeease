@@ -40,7 +40,7 @@ class Signin : AppCompatActivity() {
         signInWithEmail = findViewById(R.id.signinwithemail)
         signInWithGoogle = findViewById(R.id.signinwithgoogle)
 
-        // Configure Google Sign-In
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
